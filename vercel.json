@@ -1,6 +1,6 @@
 {
   "buildCommand": "npm install",
-  "outputDirectory": ".",
+  "outputDirectory": "public",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" }
   ],
