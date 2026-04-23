@@ -1,0 +1,12 @@
+{
+  "buildCommand": "npm install",
+  "env": {
+    "AVIATIONSTACK_API_KEY": "@aviationstack_api_key"
+  },
+  "functions": {
+    "api/index.js": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  }
+}

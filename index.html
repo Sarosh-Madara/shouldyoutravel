@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Should You Travel to the Middle East?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 750px;
+            width: 100%;
+            padding: 50px;
+            position: relative;
+            z-index: 2;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #1a1a1a;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1em;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: block;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1em;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        select:hover {
+            border-color: #667eea;
+            background-color: #f0f2ff;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            background-color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 40px;
+            display: none;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+            border: 2px solid #e0e0e0;
+            border-left: 6px solid #667eea;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .result-card h3 {
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-card p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .airport-details {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .status-operational {
+            color: #10b981;
+            font-weight: 700;
+            padding: 6px 12px;
+            background: #d1fae5;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .status-limited {
+            color: #f59e0b;
+            font-weight: 700;
+            padding: 6px 12px;
+            background: #fef3c7;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .status-closed {
+            color: #ef4444;
+            font-weight: 700;
+            padding: 6px 12px;
+            background: #fee2e2;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .airlines-list {
+            margin-top: 20px;
+        }
+
+        .airlines-list h4 {
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
+        .airline-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .airline-item {
+            background: white;
+            padding: 12px 16px;
+            margin-bottom: 0;
+            border-radius: 10px;
+            border-left: 4px solid #ef4444;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .airline-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .airline-item.available {
+            border-left-color: #10b981;
+        }
+
+        .airline-item.available::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .airline-item.notavailable::before {
+            content: '✕';
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .error-message {
+            color: #dc2626;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 4px solid #dc2626;
+            animation: shake 0.3s ease-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            select {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✈️ Middle East Travel Guide</h1>
+            <p>Plan your perfect trip to the Middle East</p>
+        </div>
+
+        <form id="travelForm">
+            <div class="form-group">
+                <label for="country"><i class="fas fa-globe"></i> Select Country:</label>
+                <select id="country" name="country" required>
+                    <option value="">-- Choose a Country --</option>
+                    <option value="saudi">🇸🇦 Saudi Arabia</option>
+                    <option value="uae">🇦🇪 United Arab Emirates</option>
+                    <option value="qatar">🇶🇦 Qatar</option>
+                    <option value="bahrain">🇧🇭 Bahrain</option>
+                    <option value="kuwait">🇰🇼 Kuwait</option>
+                    <option value="oman">🇴🇲 Oman</option>
+                    <option value="jordan">🇯🇴 Jordan</option>
+                    <option value="lebanon">🇱🇧 Lebanon</option>
+                    <option value="palestine">🇵🇸 Palestine</option>
+                    <option value="egypt">🇪🇬 Egypt</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="city"><i class="fas fa-city"></i> Select City:</label>
+                <select id="city" name="city" required>
+                    <option value="">-- Choose a City --</option>
+                </select>
+            </div>
+
+            <button type="submit"><i class="fas fa-search"></i> Check Travel Info</button>
+        </form>
+
+        <div class="result" id="result">
+            <div class="result-card" id="airportInfo"></div>
+            <div class="result-card" id="airlinesInfo"></div>
+        </div>
+
+        <div id="errorMessage"></div>
+    </div>
+
+    <script>
+        const countryData = {
+            saudi: {
+                name: '🇸🇦 Saudi Arabia',
+                cities: {
+                    riyadh: { name: 'Riyadh', airport: 'King Khalid International (RUH)', status: 'operational' },
+                    jeddah: { name: 'Jeddah', airport: 'King Abdulaziz International (JED)', status: 'operational' },
+                    dammam: { name: 'Dammam', airport: 'King Fahd International (DMM)', status: 'operational' }
+                }
+            },
+            uae: {
+                name: '🇦🇪 United Arab Emirates',
+                cities: {
+                    dubai: { name: 'Dubai', airport: 'Dubai International (DXB)', status: 'operational' },
+                    abudhabi: { name: 'Abu Dhabi', airport: 'Abu Dhabi International (AUH)', status: 'operational' },
+                    sharjah: { name: 'Sharjah', airport: 'Sharjah International (SHJ)', status: 'operational' }
+                }
+            },
+            qatar: {
+                name: '🇶🇦 Qatar',
+                cities: {
+                    doha: { name: 'Doha', airport: 'Hamad International (DOH)', status: 'operational' }
+                }
+            },
+            bahrain: {
+                name: '🇧🇭 Bahrain',
+                cities: {
+                    manama: { name: 'Manama', airport: 'Bahrain International (BAH)', status: 'operational' }
+                }
+            },
+            kuwait: {
+                name: '🇰🇼 Kuwait',
+                cities: {
+                    kuwait: { name: 'Kuwait City', airport: 'Kuwait International (KWI)', status: 'limited' }
+                }
+            },
+            oman: {
+                name: '🇴🇲 Oman',
+                cities: {
+                    muscat: { name: 'Muscat', airport: 'Muscat International (MCT)', status: 'operational' },
+                    salalah: { name: 'Salalah', airport: 'Salalah Airport (SLL)', status: 'operational' }
+                }
+            },
+            jordan: {
+                name: '🇯🇴 Jordan',
+                cities: {
+                    amman: { name: 'Amman', airport: 'Queen Alia International (AMM)', status: 'operational' }
+                }
+            },
+            lebanon: {
+                name: '🇱🇧 Lebanon',
+                cities: {
+                    beirut: { name: 'Beirut', airport: 'Rafic Hariri International (BEY)', status: 'limited' }
+                }
+            },
+            palestine: {
+                name: '🇵🇸 Palestine',
+                cities: {
+                    ramallah: { name: 'Ramallah', airport: 'Palestine Civil Airport (RBH)', status: 'limited' },
+                    gaza: { name: 'Gaza City', airport: 'Gaza International Terminal', status: 'limited' },
+                    bethlehem: { name: 'Bethlehem', airport: 'Palestine Civil Airport (RBH)', status: 'limited' }
+                }
+            },
+            egypt: {
+                name: '🇪🇬 Egypt',
+                cities: {
+                    cairo: { name: 'Cairo', airport: 'Cairo International (CAI)', status: 'operational' },
+                    sharm: { name: 'Sharm El-Sheikh', airport: 'Sharm El-Sheikh International (SSH)', status: 'operational' }
+                }
+            }
+        };
+
+        const airlineData = {
+            operational: ['Emirates', 'Etihad Airways', 'Qatar Airways', 'Saudi Arabian Airlines', 'FlyDubai', 'Air Arabia', 'Kuwait Airways', 'Royal Jordanian', 'EgyptAir'],
+            notOperating: {
+                kuwait: ['United Airlines', 'American Airlines', 'British Airways'],
+                lebanon: ['Lufthansa', 'Air France', 'KLM', 'Turkish Airlines'],
+                palestine: ['Emirates', 'Etihad Airways', 'Qatar Airways', 'FlyDubai', 'EgyptAir']
+            }
+        };
+
+        const countrySelect = document.getElementById('country');
+        const citySelect = document.getElementById('city');
+        const form = document.getElementById('travelForm');
+        const resultDiv = document.getElementById('result');
+        const airportInfo = document.getElementById('airportInfo');
+        const airlinesInfo = document.getElementById('airlinesInfo');
+        const errorMessage = document.getElementById('errorMessage');
+
+        countrySelect.addEventListener('change', function() {
+            citySelect.innerHTML = '<option value="">-- Choose a City --</option>';
+            if (this.value) {
+                const cities = countryData[this.value].cities;
+                Object.keys(cities).forEach(key => {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = cities[key].name;
+                    citySelect.appendChild(option);
+                });
+            }
+        });
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            errorMessage.innerHTML = '';
+
+            const countryKey = countrySelect.value;
+            const cityKey = citySelect.value;
+
+            if (!countryKey || !cityKey) {
+                errorMessage.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Please select both country and city.</div>';
+                resultDiv.classList.remove('show');
+                return;
+            }
+
+            const country = countryData[countryKey];
+            const city = country.cities[cityKey];
+
+            // Show loading state
+            airportInfo.innerHTML = '<h3><i class="fas fa-spinner fa-spin"></i> Loading airport data...</h3>';
+            airlinesInfo.innerHTML = '<h3><i class="fas fa-spinner fa-spin"></i> Loading airline data...</h3>';
+            resultDiv.classList.add('show');
+
+            try {
+                // Get backend URL
+                const backendURL = window.location.hostname === 'localhost'
+                    ? 'http://localhost:3001'
+                    : window.location.origin.replace('vercel.app', 'vercel.app'); // For production
+
+                // Fetch airport data from backend
+                const iataCode = city.airport.match(/\(([A-Z]{3})\)/)?.[1];
+
+                let airportData = city; // Fallback to local data
+                if (iataCode) {
+                    try {
+                        const response = await fetch(`${backendURL}/api/airport-status?iataCode=${iataCode}`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.success) {
+                                airportData = data.airport;
+                            }
+                        }
+                    } catch (err) {
+                        console.log('Using local airport data (backend not available)');
+                    }
+                }
+
+                // Fetch airline data from backend
+                let operatingAirlines = airlineData.operational;
+                if (iataCode) {
+                    try {
+                        const response = await fetch(`${backendURL}/api/airlines?iataCode=${iataCode}`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.success && data.airlines.length > 0) {
+                                operatingAirlines = data.airlines;
+                            }
+                        }
+                    } catch (err) {
+                        console.log('Using local airline data (backend not available)');
+                    }
+                }
+
+                // Display airport info
+                let statusClass = 'status-' + city.status;
+                let statusIcon = city.status === 'operational' ? '✓' : '⚠';
+
+                airportInfo.innerHTML = `
+                    <h3><i class="fas fa-plane-arrival"></i> Airport Information</h3>
+                    <div class="airport-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Country</span>
+                            <span class="detail-value">${country.name.replace('🇸🇦', '').replace('🇦🇪', '').replace('🇶🇦', '').replace('🇧🇭', '').replace('🇰🇼', '').replace('🇴🇲', '').replace('🇯🇴', '').replace('🇱🇧', '').replace('🇵🇸', '').replace('🇪🇬', '').trim()}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">City</span>
+                            <span class="detail-value">${city.name}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Airport</span>
+                            <span class="detail-value">${airportData.airport || city.airport}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Status</span>
+                            <span class="${statusClass}">${statusIcon} ${city.status.charAt(0).toUpperCase() + city.status.slice(1)}</span>
+                        </div>
+                    </div>
+                `;
+
+                // Display airlines info
+                let notOperatingAirlines = airlineData.notOperating[countryKey] || [];
+
+                let airlinesHTML = `<h3><i class="fas fa-ban"></i> Airline Availability</h3>`;
+
+                if (notOperatingAirlines.length > 0) {
+                    airlinesHTML += '<div class="airlines-list"><h4>⛔ Not Operating to ' + city.name + '</h4>';
+                    airlinesHTML += '<div class="airline-grid">';
+                    notOperatingAirlines.forEach(airline => {
+                        airlinesHTML += `<div class="airline-item notavailable">${airline}</div>`;
+                    });
+                    airlinesHTML += '</div></div>';
+                } else {
+                    airlinesHTML += '<p style="color: #666; margin: 15px 0;"><i class="fas fa-check-circle" style="color: #10b981;"></i> Most airlines are operating to this destination.</p>';
+                }
+
+                airlinesHTML += '<div class="airlines-list"><h4><i class="fas fa-check-circle" style="color: #10b981;"></i> Operating Airlines</h4>';
+                airlinesHTML += '<div class="airline-grid">';
+                operatingAirlines.slice(0, 15).forEach(airline => {
+                    airlinesHTML += `<div class="airline-item available">${typeof airline === 'string' ? airline : airline.name}</div>`;
+                });
+                airlinesHTML += '</div></div>';
+
+                airlinesInfo.innerHTML = airlinesHTML;
+
+            } catch (error) {
+                console.error('Error:', error);
+                errorMessage.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error loading data. Please try again.</div>';
+            }
+        });
+    </script>
+</body>
+</html>
