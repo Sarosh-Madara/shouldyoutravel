@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const AVIATIONSTACK_API_KEY = '2ae19966e432a575a875179e6c523efe';
+const AVIATIONSTACK_API_KEY = process.env.AVIATIONSTACK_API_KEY;
 const AVIATIONSTACK_BASE_URL = 'http://api.aviationstack.com/v1';
 
 app.get('/api/airport-status', async (req, res) => {
